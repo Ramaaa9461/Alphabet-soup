@@ -3,9 +3,5 @@
 
 void main()
 {
-	GameManager* GM = new GameManager();
-
-	delete GM;
-
-
+	GameManager::getGameManager();
 }

@@ -1,7 +1,29 @@
 #include "GameManager.h"
 
 #include <iostream>
+
 using namespace std;
+
+
+GameManager* GameManager::S_GameManager = nullptr;
+
+GameManager* GameManager::getGameManager()
+{
+	if (S_GameManager == nullptr) {
+		S_GameManager = new GameManager();
+	}
+	return S_GameManager;
+}
+
+void GameManager::changeState(GameState newState)
+{
+	state = newState;
+}
+
+void GameManager::changeInsideGameBoolean(bool insideGame)
+{
+	this->insideGame = insideGame;
+}
 
 GameManager::GameManager()
 {
@@ -12,87 +34,57 @@ GameManager::GameManager()
 		update();
 	}
 
+	deInit();
 }
 
-
+void GameManager::deInit()
+{
+	delete menu;
+	delete game;
+	delete stats;
+}
 
 void GameManager::init()
 {
-
+	cout << &state << endl;
+	menu = new Menu();
+	game = new Game();
+	stats = new PlayersStats();
 }
 
 void GameManager::update()
 {
-
 	system("cls");
 
 	switch (state)
 	{
 
-	case GameState::Menu:
+	case GameState::StateMenu:
 
-		inMenu();
+		state = menu->inMenu();
 
 		break;
-	
-	case GameState::Game:
-		
-		inGame();
-		
+
+	case GameState::StateGame:
+
+		game->inGame();
+
 		break;
 
-	case GameState::Stats:
+	case GameState::StateStats:
 
-		inStats();
-		
-		break;
-	
-	default:
-		break;
-	}
+		stats->inStats();
 
-}
-
-void GameManager::inMenu()
-{
-	int choice;
-	cout << "Bienvenido!!! " << endl << endl;
-
-	cout << "Seleccion una opcion: \n 1- Jugar \n 2- Ver Estadisticas \n 3- Salir";
-
-	do
-	{
-
-		cin >> choice;
-
-	} while (choice < 1 || choice > 3);
-
-	switch (choice)
-	{
-
-	case 1: 
-		state = GameState::Game;
 		break;
 
-	case 2:
-		state = GameState::Stats;
-		break;
-	case 3:
+	case GameState::StateExit:
+
 		insideGame = false;
+
 		break;
 
 	default:
-		system('cls');
-		inMenu(); 
 		break;
 	}
-}
 
-void GameManager::inGame()
-{
 }
-
-void GameManager::inStats()
-{
-}
-

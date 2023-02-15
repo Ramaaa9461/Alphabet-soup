@@ -2,6 +2,10 @@
 
 #include "GameState.h"
 
+#include "Menu.h"
+#include "Game.h"
+#include "PlayersStats.h"
+
 class GameManager
 {
 
@@ -10,19 +14,24 @@ private:
 	void init();
 	void update();
 
-	void inMenu();
-	void inGame();
-	void inStats();
-
-
+	Menu* menu;
+	Game* game;
+	PlayersStats* stats;
 
 	bool insideGame = true;
-	GameState state = GameState::Menu;
+	GameState state = GameState::StateMenu;
+
+	static GameManager* S_GameManager;
+	GameManager();
+	void deInit();
 
 
 public:
 
-	GameManager();
+	static GameManager* getGameManager();
+
+	void changeState(GameState newState);
+	void changeInsideGameBoolean(bool insideGame);
 
 };
 

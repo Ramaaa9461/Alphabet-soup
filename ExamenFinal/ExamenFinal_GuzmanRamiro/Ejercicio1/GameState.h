@@ -1,6 +1,6 @@
-
+#pragma once
 
 enum class GameState
 {
-	Menu = 1, Game, Stats
+	StateMenu = 1, StateGame, StateStats, StateExit
 };
