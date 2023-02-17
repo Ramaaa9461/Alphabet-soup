@@ -46,7 +46,8 @@ void GameManager::deInit()
 
 void GameManager::init()
 {
-	cout << &state << endl;
+	srand(time(NULL));
+
 	menu = new Menu();
 	game = new Game();
 	stats = new PlayersStats();
@@ -60,14 +61,22 @@ void GameManager::update()
 	{
 
 	case GameState::StateMenu:
-
+		if (!resetValues)
+		{
+			resetValues = true;
+		}
 		state = menu->inMenu();
 
 		break;
 
 	case GameState::StateGame:
 
-		game->inGame();
+		if (resetValues)
+		{
+			game->resetGame();
+			resetValues = false;
+		}
+		state = game->inGame();
 
 		break;
 

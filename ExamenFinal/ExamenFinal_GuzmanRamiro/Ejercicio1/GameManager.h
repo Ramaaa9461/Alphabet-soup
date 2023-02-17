@@ -19,6 +19,7 @@ private:
 	PlayersStats* stats;
 
 	bool insideGame = true;
+	bool resetValues = false;
 	GameState state = GameState::StateMenu;
 
 	static GameManager* S_GameManager;
