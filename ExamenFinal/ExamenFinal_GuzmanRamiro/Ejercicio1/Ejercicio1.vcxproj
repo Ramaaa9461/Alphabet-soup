@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlphabetSoupInstaller.cpp" />
+    <ClCompile Include="Awesome Library\AwesomeLibrary.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameState.h" />
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlphabetSoupInstaller.h" />
+    <ClInclude Include="Awesome Library\AwesomeLibrary.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Menu.h" />

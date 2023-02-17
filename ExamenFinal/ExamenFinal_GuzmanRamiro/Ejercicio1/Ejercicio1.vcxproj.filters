@@ -36,6 +36,9 @@
     <ClCompile Include="PlayersStats.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="Awesome Library\AwesomeLibrary.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -51,6 +54,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="PlayersStats.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Awesome Library\AwesomeLibrary.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "GameState.h"
+
 using namespace std;
 
 class Game
@@ -13,15 +15,31 @@ private:
 	const string foodSoupPath = "TematicsSoups/FoodSoup.txt";
 	const string countrysSoupPath = "TematicsSoups/CountysSoup.txt";
 
-	string soupText;
+	const char* soupText;
+	string playerName;
+	string message;
 
-	string openFileText(string path);
+	static const int WORDSTOFINDCOUNT = 5;
+	string wordsToFind[WORDSTOFINDCOUNT];
+	bool wordsFound[WORDSTOFINDCOUNT];
+
+	static const int SIZE = 10;
+	char alphabetSoipGrid[SIZE][SIZE];
+
+	void readAlphabetSoup();
+	void readCorrectsWords();
+	void checkInputPlayer();
+
+	void drawSoupGrid();
+	void drawWordsFounds();
 
 public:
 
 	Game();
 
-	void inGame();
+	GameState inGame();
+	void resetGame();
+
 
 
 };
