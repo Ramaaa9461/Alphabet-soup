@@ -1,9 +1,11 @@
 #pragma once
 
 #include <iostream>
-#include <string>
 
-class AlphabetSoupInstaller
+using namespace std;
+
+
+static class AlphabetSoupInstaller
 {
 
 private:
@@ -12,7 +14,7 @@ private:
 
 public:
 
-	//string openFileText(string path)
+	static string openFileText(string path);
 
 };
 
