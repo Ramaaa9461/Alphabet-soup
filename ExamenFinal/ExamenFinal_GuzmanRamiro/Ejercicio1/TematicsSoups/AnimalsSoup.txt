@@ -8,10 +8,10 @@ acof*****c
 *perro**o*
 *******s**
 ******o***
-
-5
++
 foca
 gato
 perro
 canguro
 oso
++

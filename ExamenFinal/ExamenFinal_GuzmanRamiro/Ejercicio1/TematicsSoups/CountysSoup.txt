@@ -8,10 +8,10 @@ anahg****a
 **l*****in
 *********a
 **uruguay*
-
-5
-Ghana
-Argentina
-Brasil
-Francia
-Uruguay
++
+ghana
+argentina
+brasil
+francia
+uruguay
++
