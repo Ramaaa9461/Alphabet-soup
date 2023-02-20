@@ -5,6 +5,9 @@
 #include "Awesome Library/AwesomeLibrary.h"
 #include "LevelInstaller.h"
 
+#include "Coin.h"
+#include "Wall.h"
+
 Game::Game()
 {
 }
@@ -12,30 +15,46 @@ Game::Game()
 Game::~Game()
 {
 	delete player;
+	delete hud;
 }
 
 void Game::initGame()
 {
 	string aux;
 
-	aux = LevelInstaller::openFileText(levelsPath[rand() % LevelCount]);
+	level = rand() % LevelCount;
+	aux = LevelInstaller::openFileText(levelsPath[level]);
 	levelText = aux.c_str();
 
-	edgeDistance = { 1 , 1 };
-	player = new Player(Color::BLUE, edgeDistance);
-
 	readLevelText();
+	edgeDistance = { getScreenWidth() / 2 - mapSize.x / 2, getScreenHeight() / 2 - mapSize.y / 2};
+	player = new Player(Color::BLUE, edgeDistance);
+	player->setInitialPosition(initialPositionPlayer.x, initialPositionPlayer.y);
+
+	
+	hud = new HUD(player, coinsCollectibles);
 }
 
-GameState Game::updateGame()
+GameState Game::updateGame(statisticsOfTheGame& gameStats)
 {
+
+	for (int i = 0; i < entity_vector.size(); i++)
+	{
+		entity_vector[i]->checkCollisions(player);
+
+		entity_vector[i]->draw();
+	}
+
 	draw();
 
-	//Hacer el guardado en archivo
 
-
-	if (player->getSteps() <= 0 && player->getCurrentCollectibles() >= player->getMaxCollectibles())
+	if (player->getCoins() >= coinsCollectibles)
 	{
+		gameStats.playerName = playerName;
+		gameStats.maximumAmountOfSteps = player->getSteps();
+		gameStats.timesPlaysByLevel[level] ++;
+
+		system("cls");
 		return GameState::StateMenu;
 	}
 	return GameState::StateGame;
@@ -43,8 +62,7 @@ GameState Game::updateGame()
 
 void Game::readLevelText()
 {
-	int numberOfRow = 0;
-	int numberOfColums = 0;
+
 	int i = 0, j = 0;
 	bool inBucle = true;
 	do
@@ -61,23 +79,30 @@ void Game::readLevelText()
 			break;
 
 		case '*': // Pared
-			levelMapGrid[i][j] = (char)219; // █
+			
+			entity_vector.push_back(new Wall(Color::YELLOW, { i + edgeDistance.x, j + edgeDistance.y }));
+
 			i++;
 			break;
 
 		case '-': //Espacio caminable
+			
 			levelMapGrid[i][j] = ' ';
+
 			i++;
 			break;
 
 		case 'c': //Moneda
-			levelMapGrid[i][j] = 'c';
+
+			entity_vector.push_back(new Coin(Color::BROWN, {i + edgeDistance.x, j + edgeDistance.y}));
+			coinsCollectibles++;
 			i++;
 
 			break;
 		case 'i': //Posicion Inicial
 
-			player->setInitialPosition(i, j);
+			initialPositionPlayer = { i , j };
+			//player->setInitialPosition(i, j);
 			i++;
 
 			break;
@@ -92,11 +117,16 @@ void Game::readLevelText()
 	} while (inBucle);
 
 	mapSize.y = j;
+
 }
 
 void Game::draw()
 {
+
+
 	player->draw();
+	hud->printStats();
+
 	drawMapGrid();
 }
 
@@ -111,16 +141,28 @@ void Game::drawMapGrid()
 		}
 		cout << endl;
 	}
+
+	setForegroundColor(Color::LBLUE);
+	drawFrame(edgeDistance.x - 1, edgeDistance.y - 1, edgeDistance.x + mapSize.x, edgeDistance.y + mapSize.y);
+	setForegroundColor(Color::WHITE);
 }
 
 void Game::resetGame()
 {
+	for (int i = 0; i < entity_vector.size(); i++)
+	{
+		entity_vector.clear();
+	}
+	coinsCollectibles = 0;
+	player->restart();
+
+	initGame();
 	system("cls");
 
 	cout << "Ingrese su nombre de usuario: ";
 	cin >> playerName;
 
-	system("cls");
+	//system("cls");
 
 	drawMapGrid();
 }

@@ -1,7 +1,6 @@
 #include "Player.h"
 
 
-
 Player::Player(Color color, Vector edgeDistance) : Entity(color)
 {
 	entityType = player;
@@ -15,33 +14,49 @@ Player::~Player()
 {
 }
 
+void Player::goToPreviusPosition()
+{
+	boxCollider.position = previusPosition;
+}
+
 void Player::setInitialPosition(int x, int y)
 {
-	initialPosition.x = x;
-	initialPosition.y = y;
+	initialPosition.x = x + edgeDistance.x;
+	initialPosition.y = y + edgeDistance.y;
 
 	restart();
 }
-
 
 void Player::playerRenderer()
 {
 	setForegroundColor(color);
 
-	goToCoordinates(boxCollider.position.x + edgeDistance.x, boxCollider.position.y + edgeDistance.y);
 
-	cout << ("O") << endl;
+	goToCoordinates(boxCollider.position.x, boxCollider.position.y);
+	cout << "0" << endl;
 
+	/*goToCoordinates(boxCollider.position.x, boxCollider.position.y);
+	cout << " " << "0" << " " << endl;
+	goToCoordinates(boxCollider.position.x, boxCollider.position.y + 1);
+	cout << "/" << "|" << "\\" << endl;
+	goToCoordinates(boxCollider.position.x, boxCollider.position.y + 2);
+	cout << "/" << " " << "\\" << endl;
+*/
 	setForegroundColor(Color::WHITE);
 
 }
 
-
 void Player::clearPlayer()
 {
-	goToCoordinates(boxCollider.position.x + edgeDistance.x, boxCollider.position.y + edgeDistance.y);
-
+	goToCoordinates(boxCollider.position.x, boxCollider.position.y);
 	cout << (" ") << endl;
+	/*goToCoordinates(boxCollider.position.x, boxCollider.position.y);
+	cout << ("   ") << endl;
+	goToCoordinates(boxCollider.position.x, boxCollider.position.y + 1);
+	cout << ("   ") << endl;
+	goToCoordinates(boxCollider.position.x, boxCollider.position.y + 2);
+	cout << ("   ") << endl;*/
+
 }
 
 #pragma region movement
@@ -49,16 +64,17 @@ void Player::clearPlayer()
 void Player::move()
 {
 	playerRenderer();
+	previusPosition = boxCollider.position;
 
 	Vector directionMove = { 0, 0 };
 	switch (getKey())
 	{
 	case 'a':
 	case 'A':
-		if (boxCollider.position.x > 1) 
+		if (boxCollider.position.x > 1)
 		{
 			directionMove = { -1,0 };
-			reduceSteps();
+			addOneSteps();
 		}
 		break;
 
@@ -68,7 +84,7 @@ void Player::move()
 		if (boxCollider.position.y + boxCollider.height < getScreenHeight() - 1)
 		{
 			directionMove = { 0,1 };
-			reduceSteps();
+			addOneSteps();
 		}
 		break;
 
@@ -77,7 +93,7 @@ void Player::move()
 		if (boxCollider.position.x + boxCollider.width < getScreenWidth() - 1)
 		{
 			directionMove = { 1,0 };
-			reduceSteps();
+			addOneSteps();
 		}
 
 		break;
@@ -87,7 +103,7 @@ void Player::move()
 		if (boxCollider.position.y > 1)
 		{
 			directionMove = { 0,-1 };
-			reduceSteps();
+			addOneSteps();
 		}
 		break;
 	}
@@ -103,6 +119,9 @@ void Player::move()
 
 void Player::restart()
 {
+	steps = 0;
+	coints = 0;
+
 	boxCollider.position.x = initialPosition.x;
 	boxCollider.position.y = initialPosition.y;
 
@@ -123,13 +142,9 @@ void Player::checkCollisions(Entity* entity)
 }
 void Player::draw()
 {
-	if (steps > 0)
-	{
-		move();
-	}
+	move();
 
 	playerRenderer();
-
 }
 
 #pragma endregion
@@ -140,28 +155,15 @@ void Player::addCoins(int coin)
 {
 	this->coints += coin;
 }
-void Player::addSteps(int steps)
-{
-	this->steps += steps;
 
-	if (this->steps > maxSteps)
-	{
-		this->steps = maxSteps;
-	}
-}
-void Player::addCurrentCollectibles()
-{
-	currentCollectibles++;
-	
-	if (this->currentCollectibles > maxCollectibles)
-	{
-		this->currentCollectibles = maxCollectibles;
-	}
-}
-
-void Player::reduceSteps()
+void Player::reduceOneSteps()
 {
 	steps--;
+}
+
+void Player::addOneSteps()
+{
+	steps++;
 }
 
 #pragma endregion 
@@ -172,22 +174,10 @@ int Player::getSteps()
 {
 	return steps;
 }
-int Player::getMaxSteps()
-{
-	return maxSteps;
-}
+
 int Player::getCoins()
 {
 	return coints;
-}
-int Player::getCurrentCollectibles()
-{
-	return currentCollectibles;
-}
-
-int Player::getMaxCollectibles()
-{
-	return maxCollectibles;
 }
 
 #pragma endregion

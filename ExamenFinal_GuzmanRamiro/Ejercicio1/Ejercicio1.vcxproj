@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="LevelInstaller.cpp" />
     <ClCompile Include="Awesome Library\AwesomeLibrary.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -28,9 +30,12 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayersStats.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="LevelInstaller.h" />
     <ClInclude Include="Awesome Library\AwesomeLibrary.h" />
     <ClInclude Include="Game.h" />
@@ -39,7 +44,9 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayersStats.h" />
+    <ClInclude Include="StatisticsOfTheGame.h" />
     <ClInclude Include="Vector.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Levels\level1.txt" />

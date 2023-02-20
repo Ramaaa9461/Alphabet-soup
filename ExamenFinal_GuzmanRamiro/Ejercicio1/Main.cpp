@@ -3,5 +3,8 @@
 
 void main()
 {
-	GameManager::getGameManager();
+	GameManager* gameManager = new GameManager();
+	
+	delete gameManager;
+
 }

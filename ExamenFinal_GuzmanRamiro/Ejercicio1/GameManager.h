@@ -20,19 +20,17 @@ private:
 
 	bool insideGame = true;
 	bool resetValues = false;
-	GameState state = GameState::StateMenu;
+	bool checkGameStats = true;
 
-	static GameManager* S_GameManager;
-	GameManager();
+	GameState state = GameState::StateMenu;
+	statisticsOfTheGame gameStats;
+
 	void deInit();
 
 
 public:
 
-	static GameManager* getGameManager();
-
-	void changeState(GameState newState);
-	void changeInsideGameBoolean(bool insideGame);
+	GameManager();
 
 };
 

@@ -5,26 +5,6 @@
 using namespace std;
 
 
-GameManager* GameManager::S_GameManager = nullptr;
-
-GameManager* GameManager::getGameManager()
-{
-	if (S_GameManager == nullptr) {
-		S_GameManager = new GameManager();
-	}
-	return S_GameManager;
-}
-
-void GameManager::changeState(GameState newState)
-{
-	state = newState;
-}
-
-void GameManager::changeInsideGameBoolean(bool insideGame)
-{
-	this->insideGame = insideGame;
-}
-
 GameManager::GameManager()
 {
 	init();
@@ -54,6 +34,7 @@ void GameManager::init()
 	stats = new PlayersStats();
 
 	game->initGame();
+	gameStats = stats->initPlayersStats();
 }
 
 void GameManager::update()
@@ -78,13 +59,18 @@ void GameManager::update()
 			game->resetGame();
 			resetValues = false;
 		}
-		state = game->updateGame();
+		state = game->updateGame(gameStats);
+
+		if (state == GameState::StateMenu)
+		{
+			stats->checkNewScore(gameStats);
+		}
 
 		break;
 
 	case GameState::StateStats:
 
-		stats->updatePlayerStats();
+		state = stats->updatePlayerStats();
 
 		break;
 

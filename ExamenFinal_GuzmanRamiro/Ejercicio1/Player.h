@@ -7,17 +7,15 @@ class Player : public Entity
 
 
 private:
-	const int maxSteps = 250;
-	int steps = maxSteps;
+	int steps = 0;
 	int coints = 0;
-	int maxCollectibles = 20;
-	int currentCollectibles = 0;
 
 	Vector initialPosition;
+	Vector previusPosition;
 	Vector edgeDistance;
 
 	void move();
-	void reduceSteps();
+	void addOneSteps();
 	void playerRenderer();
 	void clearPlayer();
 
@@ -25,17 +23,14 @@ public:
 	Player(Color color, Vector edgeDistance);
 	~Player();
 	
+	void goToPreviusPosition();
 	void setInitialPosition(int x, int y);
 
 	void addCoins(int coin);
-	void addSteps(int steps);
-	void addCurrentCollectibles();
+	void reduceOneSteps();
 
 	int getSteps();
-	int getMaxSteps();
 	int getCoins();
-	int getCurrentCollectibles();
-	int getMaxCollectibles();
 
 	void restart();
 

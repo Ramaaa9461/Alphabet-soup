@@ -1,10 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 
 #include "Entity.h"
+#include "HUD.h"
 #include "Player.h"
 
+#include "StatisticsOfTheGame.h"
 #include "GameState.h"
 
 
@@ -22,17 +25,24 @@ private:
 	const char* levelText;
 	string playerName;
 
-	static const int SIZE = 10;
+	static const int SIZE = 20;
 	char levelMapGrid[SIZE][SIZE];
+	
+	int level = 0;
 
 	void readLevelText();
 
 #pragma endregion
 
+	int coinsCollectibles = 0;
+
 	Vector mapSize;
 	Vector edgeDistance;
+	Vector initialPositionPlayer;
+	vector<Entity*> entity_vector;
 
 	Player* player;
+	HUD* hud;
 	void draw();
 
 	void drawMapGrid();
@@ -43,7 +53,7 @@ public:
 	~Game();
 
 	void initGame();
-	GameState updateGame();
+	GameState updateGame(statisticsOfTheGame& gameStats);
 	void resetGame();
 
 
