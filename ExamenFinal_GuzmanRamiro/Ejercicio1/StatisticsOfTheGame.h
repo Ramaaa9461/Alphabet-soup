@@ -5,7 +5,7 @@
 
 struct statisticsOfTheGame
 {
-	std::string playerName = "There is no information";
+	std::string playerName;// = "There is no information";
 	int maximumAmountOfSteps = 10000;
 	static const int levelCount = 3;
 	int timesPlaysByLevel[levelCount];

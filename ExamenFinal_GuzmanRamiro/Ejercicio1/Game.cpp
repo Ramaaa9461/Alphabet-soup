@@ -16,6 +16,11 @@ Game::~Game()
 {
 	delete player;
 	delete hud;
+
+	for (int i = 0; i < entity_vector.size(); i++)
+	{
+		delete entity_vector[i];
+	}
 }
 
 void Game::initGame()
@@ -122,12 +127,10 @@ void Game::readLevelText()
 
 void Game::draw()
 {
-
-
 	player->draw();
 	hud->printStats();
 
-	drawMapGrid();
+//	drawMapGrid();
 }
 
 void Game::drawMapGrid()
