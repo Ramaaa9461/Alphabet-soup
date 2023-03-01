@@ -3,25 +3,34 @@
 
 void PlayersStats::readGameStats()
 {
-	inputStream.open(Gamepath, ios::in | ios::binary);
-
-	if (!inputStream.good())
+	try
 	{
-		outputStream.open(Gamepath);
+		inputStream.open(Gamepath, ios::in | ios::binary);
 
-		if (!outputStream.good())
+		if (!inputStream.good())
 		{
-			throw ios::failure(" El archivo no se pudo abrir correctamente");
+			outputStream.open(Gamepath);
+
+			if (!outputStream.good())
+			{
+				throw ios::failure(" El archivo no se pudo abrir correctamente");
+			}
 		}
+
+
+		inputStream.read((char*)&gameStats, sizeof(statisticsOfTheGame));
+
+		inputStream.close();
+
+		if (inputStream.is_open())
+			throw ios::failure("El archivo no se cerro correctamente!");
+
 	}
 
-
-	inputStream.read((char*)&gameStats, sizeof(statisticsOfTheGame));
-
-	inputStream.close();
-
-	if (inputStream.is_open())
-		throw ios::failure("El archivo no se cerro correctamente!");
+	catch (const ios::failure& e)
+	{
+		cout << "Hubo problemas con la interaccion con el archivo, " << e.what() << endl;
+	}
 }
 
 void PlayersStats::writeGameStats()
@@ -48,6 +57,10 @@ void PlayersStats::writeGameStats()
 }
 
 PlayersStats::PlayersStats()
+{
+}
+
+PlayersStats::~PlayersStats()
 {
 }
 

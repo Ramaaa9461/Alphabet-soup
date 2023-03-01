@@ -52,7 +52,11 @@ GameState Game::updateGame(statisticsOfTheGame& gameStats)
 
 	draw();
 
-
+	int key = getKey(false);
+	if (key == KEY_ESC || key == 59) // Con escape dejo de funcionar pero con F1 (59) si funcionando
+	{
+		return GameState::StateMenu;
+	}
 	if (player->getCoins() >= coinsCollectibles)
 	{
 		gameStats.playerName = playerName;
@@ -67,7 +71,6 @@ GameState Game::updateGame(statisticsOfTheGame& gameStats)
 
 void Game::readLevelText()
 {
-
 	int i = 0, j = 0;
 	bool inBucle = true;
 	do

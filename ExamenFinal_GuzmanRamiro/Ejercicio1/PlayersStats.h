@@ -28,6 +28,7 @@ private:
 public:
 
 	PlayersStats();
+	~PlayersStats();
 
 	statisticsOfTheGame initPlayersStats();
 	GameState updatePlayerStats();

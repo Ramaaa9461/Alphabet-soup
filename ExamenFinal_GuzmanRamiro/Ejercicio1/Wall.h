@@ -16,8 +16,5 @@ public:
 	virtual type getEntityType() override;
 	virtual void checkCollisions(Entity* entity) override;
 	virtual void draw() override;
-
-
-
 };
 
